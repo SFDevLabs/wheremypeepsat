@@ -9,10 +9,10 @@
     <div class="col-md-8">
       <p>{{ article.body }}</p>
       <div class="meta">
-        {% if (article.user) %}
+        {% if (article.createdBy) %}
           Author: &nbsp;
-          <a href="{{ '/users/' + article.user._id }}">
-            {{ article.user.name || article.user.username }}
+          <a href="{{ '/users/' + article.createdBy._id }}">
+            {{ article.createdBy.name || article.createdBy.username }}
           </a>
         {% endif %}
         {% if (article.tags) %}

@@ -35,7 +35,25 @@ var setTags = function (tags) {
 var ProjectSchema = new Schema({
   title: {type : String, default : '', trim : true},
   body: {type : String, default : '', trim : true},
-  user: {type : Schema.ObjectId, ref : 'User'},
+  createdBy: {type : Schema.ObjectId, ref : 'User'},
+  Organizations: [{
+    obj:{type : Schema.ObjectId, ref : 'Organization'},
+    tags:{type: [], get: getTags, set: setTags},
+    createdAt: { type : Date, default : Date.now },
+    createdBy: {type : Schema.ObjectId, ref : 'User'},
+  }],
+  People: [{
+    obj:{type : Schema.ObjectId, ref : 'People'},
+    tags:{type: [], get: getTags, set: setTags},
+    createdAt: { type : Date, default : Date.now },
+    createdBy: {type : Schema.ObjectId, ref : 'User'},
+  }],
+  Projects: [{
+    obj:{type : Schema.ObjectId, ref : 'Project'},
+    tags:{type: [], get: getTags, set: setTags},
+    createdAt: { type : Date, default : Date.now },
+    createdBy: {type : Schema.ObjectId, ref : 'User'},
+  }],
   comments: [{
     body: { type : String, default : '' },
     user: { type : Schema.ObjectId, ref : 'User' },
@@ -163,7 +181,7 @@ ProjectSchema.statics = {
 
   load: function (id, cb) {
     this.findOne({ _id : id })
-      .populate('user', 'name email username')
+      .populate('createdBy', 'name email username')
       .populate('comments.user')
       .exec(cb);
   },
@@ -180,7 +198,7 @@ ProjectSchema.statics = {
     var criteria = options.criteria || {}
 
     this.find(criteria)
-      .populate('user', 'name username')
+      .populate('createdBy', 'name username')
       .sort({'createdAt': -1}) // sort by date
       .limit(options.perPage)
       .skip(options.perPage * options.page)

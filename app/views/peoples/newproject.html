@@ -1,0 +1,51 @@
+{% extends '../layouts/default.html' %}
+
+{% block main %}
+  <h1>{{ title }}</h1>
+  <hr>
+{% endblock %}
+
+{% block content %}
+  {% if article.isNew %}
+    {% set action = '/people' %}
+  {% else %}
+    {% set action = '/people/' + people._id %}
+  {% endif %}
+  
+  <div class="row">
+    <div class="col-md-8">
+      <form method="post" action="/people/{{article.id}}/project" enctype="multipart/form-data" role="form" class="form-horizontal">
+
+        <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+
+
+        <div class="form-group">
+          <label for="title" class="col-sm-2 control-label">Id</label>
+          <div class="col-sm-10">
+            <input type="text" name="obj" value="{{ edge.id }}" placeholder="Enter the title" class="form-control" id="title">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tags" class="col-sm-2 control-label">Tags</label>
+          <div class="col-sm-10">
+            <input type="text" name="tags" value="{{ edge.tags }}" placeholder="Enter the tags" class="form-control" id="tags">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-primary" type="submit">Save</button>
+            &nbsp;
+            <a href="/articles" class="btn btn-link">Cancel</a>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4">
+      {% if (!article.isNew && article.image && article.image.files && article.image.files.length) %}
+        <img src="{{ article.image.cdnUri + '/mini_' + article.image.files[0] }}" alt="">
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

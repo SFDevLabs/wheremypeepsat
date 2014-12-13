@@ -8,11 +8,11 @@
 
   <span class="muted">{{ article.createdAt.toISOString()|date('M d, Y  h:m a') }}</span>
 
-  {% if (article.user) %}
+  {% if (article.createdBy) %}
     &nbsp; - &nbsp;
     <span>Author: </span>
-    <a href="{{ '/users/' + article.user._id }}">
-      {{ article.user.name || article.user.username }}
+    <a href="{{ '/users/' + article.createdBy._id }}">
+      {{ article.createdBy.name || article.createdBy.username }}
     </a>
   {% endif %}
 

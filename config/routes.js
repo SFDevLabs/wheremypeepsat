@@ -111,6 +111,16 @@ module.exports = function (app, passport) {
   app.put('/people/:id', auth.requiresLogin, peoples.update);
   app.delete('/people/:id', auth.requiresLogin, peoples.destroy);
 
+  app.get('/people/:id/person', peoples.newPerson);
+  app.post('/people/:id/person', peoples.createPerson);
+
+  app.get('/people/:id/organization', peoples.newOrganization);
+  app.post('/people/:id/organization', peoples.createOrganization);
+
+  app.get('/people/:id/project', peoples.newProject);
+  app.post('/people/:id/project', peoples.createProject);
+
+
   // projects routes
   app.param('id_project', projects.load);
   app.get('/projects', projects.index);

@@ -54,8 +54,97 @@ exports.index = function (req, res){
 
 exports.new = function (req, res){
   res.render('peoples/new', {
-    title: 'New Article',
+    title: 'New Person',
     article: new Article({})
+  });
+};
+
+/**
+ * New Person
+ */
+
+exports.newPerson = function (req, res){
+
+  res.render('peoples/newperson', {
+    title: 'NewPerson',
+    article: req.article
+  });
+};
+
+/**
+ * Create Person
+ */
+
+exports.createPerson = function (req, res){
+  var article = req.article;
+  article.People.push(req.body);
+  article.save(function(err){
+        if (err) {
+          req.flash('error', 'An Error Occured, Person not added.');
+        } else{
+          req.flash('success', 'Successfully added person!');
+        }
+      return res.redirect('/people/'+article._id);
+  });
+
+
+};
+
+/**
+ * New Organization
+ */
+
+exports.newOrganization = function (req, res){
+  res.render('peoples/neworganization', {
+    title: 'NewOrganization',
+    article: req.article
+  });
+};
+
+/**
+ * Create Organization
+ */
+
+exports.createOrganization = function (req, res){
+  var article = req.article;
+  article.Organizations.push(req.body);
+
+  article.save(function(err){
+        if (err) {
+          req.flash('error', 'An Error Occured, Organization not added.');
+        } else{
+          req.flash('success', 'Successfully added organization!');
+        }
+      return res.redirect('/people/'+article._id);
+  });
+};
+
+/**
+ * New Organization
+ */
+
+exports.newProject = function (req, res){
+
+  res.render('peoples/newproject', {
+    title: 'NewProject',
+    article: req.article
+  });
+};
+
+/**
+ * Create Organization
+ */
+
+exports.createProject = function (req, res){
+  var article = req.article;
+  article.Projects.push(req.body);
+  article.save(function(err){
+        if (err) {
+          req.flash('error', 'An Error Occured, Project not added.');
+        } else{
+          req.flash('success', 'Successfully added project!');
+        }
+      return res.redirect('/people/'+article._id);
   });
 };
 
@@ -70,11 +159,11 @@ exports.create = function (req, res) {
     ? [req.files.image]
     : undefined;
 
-  article.user = req.user;
+  article.createdBy = req.user;
   article.uploadAndSave(images, function (err) {
     if (!err) {
       req.flash('success', 'Successfully created article!');
-      return res.redirect('/peoples/'+article._id);
+      return res.redirect('/people/'+article._id);
     }
     console.log(err);
     res.render('peoples/new', {
@@ -112,7 +201,7 @@ exports.update = function (req, res){
 
   article.uploadAndSave(images, function (err) {
     if (!err) {
-      return res.redirect('/peoples/' + article._id);
+      return res.redirect('/people/' + article._id);
     }
 
     res.render('peoples/edit', {

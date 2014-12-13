@@ -9,10 +9,10 @@
     <div class="col-md-8">
       <p>{{ article.body }}</p>
       <div class="meta">
-        {% if (article.user) %}
+        {% if (article.createdBy) %}
           Author: &nbsp;
-          <a href="{{ '/users/' + article.user._id }}">
-            {{ article.user.name || article.user.username }}
+          <a href="{{ '/users/' + article.createdBy._id }}">
+            {{ article.createdBy.name || article.createdBy.username }}
           </a>
         {% endif %}
         {% if (article.tags) %}
@@ -45,6 +45,78 @@
     <input type="hidden" name="_method" value="DELETE">
     <button class="btn btn-danger" type="submit">Delete</button>
   </form>
+
+  <div class="row">
+    <hr>
+    <div class="col-md-8">
+      {% for o in article.Organizations %}
+      <div class="col-md-3">
+        <p>
+         <a href="/projects/{{project.obj.id}}">{{o.obj.title}}</a>
+        </p>
+        <p>
+          {% for tag in o.tags.split(',') %}
+            <i class="muted fa fa-tag"></i>&nbsp;
+            <a href="{{ '/tags/' + tag }}" class="tag">{{ tag }}</a>
+          {% endfor %}
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-md-4">
+      <a href="{{ '/people/' + article._id + '/project' }}" title="edit" class="btn btn-default">
+        Add Project
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <hr>
+    <div class="col-md-8">
+      {% for o in article.Organizations %}
+      <div class="col-md-3">
+        <p>
+         <a href="/projects/{{project.obj.id}}">{{o.obj.title}}</a>
+        </p>
+        <p>
+          {% for tag in o.tags.split(',') %}
+            <i class="muted fa fa-tag"></i>&nbsp;
+            <a href="{{ '/tags/' + tag }}" class="tag">{{ tag }}</a>
+          {% endfor %}
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-md-4">
+      <a href="{{ '/people/' + article._id + '/project' }}" title="edit" class="btn btn-default">
+        Add Project
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <hr>
+    <div class="col-md-8">
+      {% for o in article.Projects %}
+      <div class="col-md-3">
+        <p>
+         <a href="/projects/{{project.obj.id}}">{{o.obj.title}}</a>
+        </p>
+        <p>
+          {% for tag in o.tags.split(',') %}
+            <i class="muted fa fa-tag"></i>&nbsp;
+            <a href="{{ '/tags/' + tag }}" class="tag">{{ tag }}</a>
+          {% endfor %}
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-md-4">
+      <a href="{{ '/people/' + article._id + '/project' }}" title="edit" class="btn btn-default">
+        Add Project
+      </a>
+    </div>
+  </div>
 
   <br>
   <h3>Comments</h3>

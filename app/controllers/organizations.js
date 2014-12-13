@@ -70,7 +70,7 @@ exports.create = function (req, res) {
     ? [req.files.image]
     : undefined;
 
-  article.user = req.user;
+  article.createdBy = req.user;
   article.uploadAndSave(images, function (err) {
     if (!err) {
       req.flash('success', 'Successfully created article!');
