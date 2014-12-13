@@ -42,6 +42,7 @@ require('./config/express')(app, passport);
 require('./config/routes')(app, passport);
 
 console.log('Express app started on port ' + port);
+app.listen(port)
 
 /**
  * Expose
