@@ -20,7 +20,7 @@ var notifier = {
 };
 
 var defaults = {
-  root: path.normalize(__dirname + '/..'),
+  root: path.normalize(__dirname + '/../'),
   notifier: notifier
 };
 
