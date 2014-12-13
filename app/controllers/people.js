@@ -14,13 +14,30 @@ var extend = require('util')._extend
 
 exports.load = function (req, res, next, id){
   var User = mongoose.model('User');
+  Article.find({
+      "People": {$elemMatch:{obj:id}}
+    }, function(err, results){
 
-  Article.load(id, function (err, article) {
-    if (err) return next(err);
-    if (!article) return next(new Error('not found'));
-    req.article = article;
-    next();
-  });
+    req.connectedPeople = results.map(function(val){
+       index=null;
+       // This checlk for a match b/w objt and edges.  Its so we can find the index so we can return the correct relationship tags b/w the two people.
+       val.People.forEach(function(indexVal, i){if (indexVal.obj==id){index=i;}});
+      return {
+        obj: val,
+        tags: index!==null?val.People[index].tags:null,
+        createdAt: index!==null?val.People[index].createdAt:null,
+        _id: index!==null?val.People[index]._id:null
+      }
+    });
+
+    console.log(req.connectedPeople)
+    Article.load(id ,function (err, article) {
+      if (err) return next(err);
+      if (!article) return next(new Error('not found'));
+      req.article = article;
+      next();
+    });
+  }); //elemMatch id to find connection going other way
 };
 
 /**
@@ -219,7 +236,8 @@ exports.update = function (req, res){
 exports.show = function (req, res){
   res.render('peoples/show', {
     title: req.article.title,
-    article: req.article
+    article: req.article,
+    connectedPeople: req.connectedPeople
   });
 };
 

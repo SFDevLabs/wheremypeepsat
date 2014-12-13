@@ -82,6 +82,12 @@ exports.login = function (req, res) {
  */
 
 exports.signup = function (req, res) {
+
+  var code = req.param('code');
+
+  if (code!=='presence3@'){
+   return res.send('These are not the droids your looking for.')
+  }
   res.render('users/signup', {
     title: 'Sign up',
     user: new User()

@@ -30,12 +30,12 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li class="{% if (isActive('/users/' + req.user.id )) %}active{% endif %}">
-          <a href="{{ '/users/' + req.user.id }}" title="Profile">Profile</a>
-        </li>
         {% if (req.isAuthenticated()) %}
         <li>
           <a href="/logout" title="logout">Logout</a>
+        </li>
+        <li class="{% if (isActive('/users/' + req.user.id )) %}active{% endif %}">
+          <a href="{{ '/users/' + req.user.id }}" title="Profile">Profile</a>
         </li>
         {% else %}
         <li class="{% if (isActive('/login')) %}active{% endif %}">

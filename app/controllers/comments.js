@@ -31,7 +31,7 @@ exports.create = function (req, res) {
 
   article.addComment(user, req.body, function (err) {
     if (err) return res.render('500');
-    res.redirect('/articles/'+ article.id);
+    res.redirect('/people/'+ article.id);
   });
 }
 
@@ -47,6 +47,6 @@ exports.destroy = function (req, res) {
     } else {
       req.flash('info', 'Removed comment');
     }
-    res.redirect('/articles/' + article.id);
+    res.redirect('/people/' + article.id);
   });
 };

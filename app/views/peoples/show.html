@@ -52,10 +52,13 @@
       <p class="muted">
         Connected People:
       </p>
-      {% for o in article.People %}
+
+      
+      {% set people = connectedPeople.concat(article.People)%}
+      {% for o in people %}
       <div class="col-md-2 edge-box">
         <p>
-         <a href="/projects/{{project.obj.id}}">{{o.obj.id}} {{o.obj.lastname}}</a>
+         <a href="/people/{{o.obj.id}}">{{o.obj.firstname}} {{o.obj.lastname}}</a>
         </p>
         <p>
           {% for tag in o.tags.split(',') %}

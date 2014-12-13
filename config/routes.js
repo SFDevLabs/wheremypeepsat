@@ -37,7 +37,7 @@ module.exports = function (app, passport) {
       failureRedirect: '/login',
       failureFlash: 'Invalid email or password.'
     }), users.session);
-  app.get('/users/:userId', users.show);
+  app.get('/users/:userId', auth.requiresLogin, users.show);
   app.get('/auth/facebook',
     passport.authenticate('facebook', {
       scope: [ 'email', 'user_about_me'],
@@ -92,7 +92,7 @@ module.exports = function (app, passport) {
 
   // organizations routes
   app.param('idorg', organizations.load);
-  app.get('/organizations', organizations.index);
+  app.get('/organizations', auth.requiresLogin, organizations.index);
   app.get('/organizations/new', auth.requiresLogin, organizations.new);
   app.post('/organizations', auth.requiresLogin, organizations.create);
   app.get('/organizations/:idorg', organizations.show);
@@ -105,7 +105,7 @@ module.exports = function (app, passport) {
   app.get('/people/search', peoples.search);
 
   app.param('id', peoples.load);
-  app.get('/people', peoples.index);
+  app.get('/people', auth.requiresLogin, peoples.index);
   app.get('/people/new', auth.requiresLogin, peoples.new);
   app.post('/people', auth.requiresLogin, peoples.create);
   app.get('/people/:id', peoples.show);
@@ -113,21 +113,21 @@ module.exports = function (app, passport) {
   app.put('/people/:id', auth.requiresLogin, peoples.update);
   app.delete('/people/:id', auth.requiresLogin, peoples.destroy);
 
-  app.get('/people/:id/person', peoples.newPerson);
-  app.post('/people/:id/person', peoples.createPerson);
+  app.get('/people/:id/person', auth.requiresLogin, peoples.newPerson);
+  app.post('/people/:id/person', auth.requiresLogin, peoples.createPerson);
 
 
 
-  app.get('/people/:id/organization', peoples.newOrganization);
-  app.post('/people/:id/organization', peoples.createOrganization);
+  app.get('/people/:id/organization', auth.requiresLogin ,peoples.newOrganization);
+  app.post('/people/:id/organization', auth.requiresLogin, peoples.createOrganization);
 
-  app.get('/people/:id/project', peoples.newProject);
-  app.post('/people/:id/project', peoples.createProject);
+  app.get('/people/:id/project', auth.requiresLogin ,peoples.newProject);
+  app.post('/people/:id/project', auth.requiresLogin, peoples.createProject);
 
 
   // projects routes
-  app.param('id_project', projects.load);
-  app.get('/projects', projects.index);
+  app.param('id_project', auth.requiresLogin, projects.load);
+  app.get('/projects', auth.requiresLogin, projects.index);
   app.get('/projects/new', auth.requiresLogin, projects.new);
   app.post('/projects', auth.requiresLogin, projects.create);
   app.get('/projects/:id_project', projects.show);
@@ -138,13 +138,13 @@ module.exports = function (app, passport) {
 
 
   // home route
-  app.get('/', peoples.index);
+  app.get('/', auth.requiresLogin, peoples.index);
 
   // comment routes
-  app.param('commentId', comments.load);
-  app.post('/peoples/:id/comments', auth.requiresLogin, comments.create);
-  app.get('/peoples/:id/comments', auth.requiresLogin, comments.create);
-  //app.delete('/peoples/:id/comments/:commentId', commentAuth, comments.destroy);
+  app.param('commentId', auth.requiresLogin, comments.load);
+  app.post('/people/:id/comments', auth.requiresLogin, comments.create);
+  app.get('/people/:id/comments', auth.requiresLogin, comments.create);
+  app.delete('/people/:id/comments/:commentId', commentAuth, comments.destroy);
 
   // tag routes
   app.get('/tags/:tag', tags.index);

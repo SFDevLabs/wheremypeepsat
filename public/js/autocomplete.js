@@ -44,10 +44,10 @@ $(document).ready(function () {
 	var time=0;
 	 $("#search").keyup(function(e){
 	 	if (time==0){
-		 	time=500;
+		 	time=300;
 		 	counter();	 		
 	 	}else{
-	 		time=500;
+	 		time=300;
 	 	}
 	 });
 	 var counter = function(){
@@ -56,10 +56,10 @@ $(document).ready(function () {
 	 		if (time<=0){
 	 			ajax();
 	 		}else{
-	 			time=time-500
+	 			time=time-300
 	 			counter();
 	 		}
-	 	},500);
+	 	},300);
 	 }
 
 	var opts = {
