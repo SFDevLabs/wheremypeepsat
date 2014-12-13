@@ -24,11 +24,6 @@ var defaults = {
   notifier: notifier
 };
 
-var prod = {
-  root: path.normalize(__dirname + '/../..'),
-  notifier: notifier
-};
-
 /**
  * Expose
  */
@@ -36,5 +31,5 @@ var prod = {
 module.exports = {
   development: extend(development, defaults),
   test: extend(test, defaults),
-  production: extend(production, prod)
+  production: extend(production, defaults)
 }[process.env.NODE_ENV || 'development'];
