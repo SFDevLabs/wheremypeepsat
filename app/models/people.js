@@ -33,7 +33,8 @@ var setTags = function (tags) {
  */
 
 var PeopleSchema = new Schema({
-  title: {type : String, default : '', trim : true},
+  firstname: {type : String, default : '', trim : true},
+  lastname: {type : String, default : '', trim : true},
   body: {type : String, default : '', trim : true},
   createdBy: {type : Schema.ObjectId, ref : 'User'},
   Organizations: [{
@@ -71,8 +72,8 @@ var PeopleSchema = new Schema({
  * Validations
  */
 
-PeopleSchema.path('title').required(true, 'Article title cannot be blank');
-PeopleSchema.path('body').required(true, 'Article body cannot be blank');
+PeopleSchema.path('firstname').required(true, 'Article title cannot be blank');
+PeopleSchema.path('lastname').required(true, 'Article title cannot be blank');
 
 /**
  * Pre-remove hook

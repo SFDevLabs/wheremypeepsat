@@ -66,7 +66,7 @@ exports.new = function (req, res){
 exports.newPerson = function (req, res){
 
   res.render('peoples/newperson', {
-    title: 'NewPerson',
+    title: 'Connect a Person',
     article: req.article
   });
 };
@@ -96,7 +96,7 @@ exports.createPerson = function (req, res){
 
 exports.newOrganization = function (req, res){
   res.render('peoples/neworganization', {
-    title: 'NewOrganization',
+    title: 'Connect an Organization',
     article: req.article
   });
 };
@@ -126,7 +126,7 @@ exports.createOrganization = function (req, res){
 exports.newProject = function (req, res){
 
   res.render('peoples/newproject', {
-    title: 'NewProject',
+    title: 'Connect a Project',
     article: req.article
   });
 };
@@ -180,7 +180,7 @@ exports.create = function (req, res) {
 
 exports.edit = function (req, res) {
   res.render('peoples/edit', {
-    title: 'Edit ' + req.article.title,
+    title: 'Edit ' + req.article.firstname+' '+req.article.lastname,
     article: req.article
   });
 };
@@ -234,3 +234,40 @@ exports.destroy = function (req, res){
     res.redirect('/people');
   });
 };
+
+/**
+ * Delete an article
+ */
+
+exports.search = function (req, res){
+
+  var q = req.param('q');
+  var regex = regexBuilder(q);
+  var options;
+  if (regex!==null){
+    options = {$or:[{firstname:regex},{lastname:regex},{tags:regex}]}
+  }else{
+    options={};
+  }
+  Article.find(options)
+  .limit(7)
+      .exec(function(err, result){
+        res.send(result);
+  });
+}
+  
+
+regexBuilder= function(q){
+  if(q){
+        var words = q.split(' '),
+            regexPart='',
+            regex;
+        for (var i = words.length - 1; i >= 0; i--) {
+          regexPart+='(?=.*'+words[i]+')';
+          regexPart+=(i===0)?'':'|';
+        };
+        return new RegExp(regexPart+'.*','i');
+    }else{
+      return null;
+    }
+}

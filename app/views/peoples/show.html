@@ -1,7 +1,7 @@
 {% extends '../layouts/default.html' %}
 
 {% block main %}
-  <h1>{{ article.title }}</h1>
+  <h1>{{ article.firstname }} {{ article.lastname }}</h1>
 {% endblock %}
 
 {% block content %}
@@ -48,9 +48,39 @@
 
   <div class="row">
     <hr>
-    <div class="col-md-8">
+    <div class="col-md-10">
+      <p class="muted">
+        Connected People:
+      </p>
+      {% for o in article.People %}
+      <div class="col-md-2 edge-box">
+        <p>
+         <a href="/projects/{{project.obj.id}}">{{o.obj.id}} {{o.obj.lastname}}</a>
+        </p>
+        <p>
+          {% for tag in o.tags.split(',') %}
+            <i class="muted fa fa-tag"></i>&nbsp;
+            <a href="{{ '/tags/' + tag }}" class="tag">{{ tag }}</a>
+          {% endfor %}
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-md-2">
+      <a href="{{ '/people/' + article._id + '/person' }}" title="edit" class="btn btn-default">
+        Add People
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <hr>
+    <div class="col-md-10">
+      <p class="muted">
+        Connected Organizations:
+      </p>
       {% for o in article.Organizations %}
-      <div class="col-md-3">
+      <div class="col-md-2 edge-box">
         <p>
          <a href="/projects/{{project.obj.id}}">{{o.obj.title}}</a>
         </p>
@@ -63,42 +93,21 @@
       </div>
       {% endfor %}
     </div>
-    <div class="col-md-4">
-      <a href="{{ '/people/' + article._id + '/project' }}" title="edit" class="btn btn-default">
-        Add Project
+    <div class="col-md-2">
+      <a href="{{ '/people/' + article._id + '/organization' }}" title="edit" class="btn btn-default">
+        Add Organizations
       </a>
     </div>
   </div>
 
   <div class="row">
     <hr>
-    <div class="col-md-8">
-      {% for o in article.Organizations %}
-      <div class="col-md-3">
-        <p>
-         <a href="/projects/{{project.obj.id}}">{{o.obj.title}}</a>
-        </p>
-        <p>
-          {% for tag in o.tags.split(',') %}
-            <i class="muted fa fa-tag"></i>&nbsp;
-            <a href="{{ '/tags/' + tag }}" class="tag">{{ tag }}</a>
-          {% endfor %}
-        </p>
-      </div>
-      {% endfor %}
-    </div>
-    <div class="col-md-4">
-      <a href="{{ '/people/' + article._id + '/project' }}" title="edit" class="btn btn-default">
-        Add Project
-      </a>
-    </div>
-  </div>
-
-  <div class="row">
-    <hr>
-    <div class="col-md-8">
+    <div class="col-md-10">
+      <p class="muted">
+        Connected Projects:
+      </p>
       {% for o in article.Projects %}
-      <div class="col-md-3">
+      <div class="col-md-2 edge-box">
         <p>
          <a href="/projects/{{project.obj.id}}">{{o.obj.title}}</a>
         </p>
@@ -111,7 +120,7 @@
       </div>
       {% endfor %}
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2">
       <a href="{{ '/people/' + article._id + '/project' }}" title="edit" class="btn btn-default">
         Add Project
       </a>

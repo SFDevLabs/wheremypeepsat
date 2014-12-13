@@ -93,3 +93,34 @@ button.error:focus {
   padding-left: 5px;
   padding-right: 5px;
 }
+
+.edge-box{
+  background-color: #eee;
+  height: 6em;
+  padding: 1em;
+  margin: .5em;
+  border: 1px dashed #fff;
+}
+
+ul.searchList{
+  min-height: 100px;
+  padding-left: 0px;
+}
+
+ul.searchList li{
+  min-height: 75px;
+  list-style:none;
+  padding:15px;
+}
+ul.searchList li.selected{
+  border: 2px solid #999;
+}
+.searchList .title{
+  font-weight: bold;
+}
+
+.searchList a:link {
+color: #333;
+text-decoration: none;
+border-bottom: 1px solid blue;
+}

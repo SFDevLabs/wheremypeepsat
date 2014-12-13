@@ -102,6 +102,8 @@ module.exports = function (app, passport) {
 
 
   // peoples routes
+  app.get('/people/search', peoples.search);
+
   app.param('id', peoples.load);
   app.get('/people', peoples.index);
   app.get('/people/new', auth.requiresLogin, peoples.new);
@@ -113,6 +115,8 @@ module.exports = function (app, passport) {
 
   app.get('/people/:id/person', peoples.newPerson);
   app.post('/people/:id/person', peoples.createPerson);
+
+
 
   app.get('/people/:id/organization', peoples.newOrganization);
   app.post('/people/:id/organization', peoples.createOrganization);
