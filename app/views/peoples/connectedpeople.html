@@ -1,0 +1,18 @@
+<div class="col-md-2 edge-box">
+  <p>
+   <a href="/people/{{o.obj.id}}">{{o.obj.firstname}} {{o.obj.lastname}}
+   </a>
+    <a  class="edit" href="/people/{{id}}/person/{{o.id}}">edit</a>
+  </p>
+  <div class="tagsinput_naked">
+    {% for tag in o.tags.split(',') %}
+    <span class="tag">
+      <a href="{{ '/tags/' + tag }}" >{{ tag }}</a>
+    </span>
+    {% endfor %}
+  </div>
+
+  </p>
+  <p>
+  </p>
+</div>

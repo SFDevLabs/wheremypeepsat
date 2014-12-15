@@ -52,21 +52,13 @@
       <p class="muted">
         Connected People:
       </p>
-
-      
-      {% set people = connectedPeople.concat(article.People)%}
-      {% for o in people %}
-      <div class="col-md-2 edge-box">
-        <p>
-         <a href="/people/{{o.obj.id}}">{{o.obj.firstname}} {{o.obj.lastname}}</a>
-        </p>
-        <p>
-          {% for tag in o.tags.split(',') %}
-            <i class="muted fa fa-tag"></i>&nbsp;
-            <a href="{{ '/tags/' + tag }}" class="tag">{{ tag }}</a>
-          {% endfor %}
-        </p>
-      </div>
+      {% set id = article.id %}
+      {% for o in article.People %}
+        {% include './connectedpeople.html' %}
+      {% endfor %}
+      {% for o in connectedPeople %}
+        {% set id = o.obj.id %}
+        {% include './connectedpeople.html' %}
       {% endfor %}
     </div>
     <div class="col-md-2">

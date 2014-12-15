@@ -113,6 +113,8 @@ module.exports = function (app, passport) {
   app.put('/people/:id', auth.requiresLogin, peoples.update);
   app.delete('/people/:id', auth.requiresLogin, peoples.destroy);
 
+  app.param('ide', peoples.loadconnected);
+  app.get('/people/:id/person/:ide', auth.requiresLogin, peoples.connected);
   app.get('/people/:id/person', auth.requiresLogin, peoples.newPerson);
   app.post('/people/:id/person', auth.requiresLogin, peoples.createPerson);
 

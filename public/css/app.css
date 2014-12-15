@@ -97,7 +97,7 @@ button.error:focus {
 .edge-box{
   background-color: #eee;
   margin: .5em;
-  height: 6em;
+  min-height: 7em;
   border: 1px dashed #fff;
 }
 .edge-box > *{
@@ -107,6 +107,17 @@ button.error:focus {
   color: #333;
   text-decoration: none;
 
+}
+
+.edge-box a.edit{
+  position: absolute;
+  right: 5px;
+  bottom: 1px;
+  display: none;
+}
+
+.edge-box:hover a.edit{
+  display: inline;
 }
 
 .edge-box p{

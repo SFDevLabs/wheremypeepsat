@@ -14,9 +14,11 @@ var extend = require('util')._extend
 
 exports.load = function (req, res, next, id){
   var User = mongoose.model('User');
-  Article.find({
+  Article
+    .find({
       "People": {$elemMatch:{obj:id}}
-    }, function(err, results){
+    })
+    .exec(function(err, results){
 
     req.connectedPeople = results.map(function(val){
        index=null;
@@ -26,19 +28,36 @@ exports.load = function (req, res, next, id){
         obj: val,
         tags: index!==null?val.People[index].tags:null,
         createdAt: index!==null?val.People[index].createdAt:null,
-        _id: index!==null?val.People[index]._id:null
+        id: index!==null?val.People[index].id:null
       }
     });
 
-    console.log(req.connectedPeople)
     Article.load(id ,function (err, article) {
       if (err) return next(err);
       if (!article) return next(new Error('not found'));
       req.article = article;
+      console.log(req.article, 'load')
       next();
     });
   }); //elemMatch id to find connection going other way
 };
+
+exports.loadconnected = function (req, res, next, id){
+  req.connected=req.article.People[0]
+  next();
+}
+exports.connected = function (req, res){
+  ///console.log(req.connected)
+    var articles = req.articles;
+    var connected = req.articles;
+    res.render('peoples/editconnection', {
+        title: 'People',
+        articles: articles,
+        connected: connected
+      });
+
+  //.send({1:req.connected,2:req.article})
+}
 
 /**
  * List
