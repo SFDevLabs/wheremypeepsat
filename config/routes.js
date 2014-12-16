@@ -114,10 +114,12 @@ module.exports = function (app, passport) {
   app.delete('/people/:id', auth.requiresLogin, peoples.destroy);
 
   app.param('ide', peoples.loadconnected);
-  app.get('/people/:id/person/:ide', auth.requiresLogin, peoples.connected);
   app.get('/people/:id/person', auth.requiresLogin, peoples.newPerson);
   app.post('/people/:id/person', auth.requiresLogin, peoples.createPerson);
 
+  app.get('/people/:id/person/:ide', auth.requiresLogin, peoples.connectededit);
+  app.put('/people/:id/person/:ide', auth.requiresLogin, peoples.connectedupdate);
+  app.post('/people/:id/person', auth.requiresLogin, peoples.createPerson);
 
 
   app.get('/people/:id/organization', auth.requiresLogin ,peoples.newOrganization);
@@ -163,7 +165,6 @@ module.exports = function (app, passport) {
       || (~err.message.indexOf('Cast to ObjectId failed')))) {
       return next();
     }
-    console.error(err.stack);
     // error page
     res.status(500).render('500', { error: err.stack });
   });

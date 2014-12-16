@@ -40,17 +40,20 @@ var PeopleSchema = new Schema({
   Organizations: [{
     obj: {type : Schema.ObjectId, ref : 'Organization'},
     tags:{type: [], get: getTags, set: setTags},
+    body: {type : String, default : '', trim : true},
     createdAt: { type : Date, default : Date.now },
     createdBy: {type : Schema.ObjectId, ref : 'User'},
   }],
   People: [{
     obj: { type : Schema.ObjectId, ref : 'People' },
+    body: {type : String, default : '', trim : true},
     tags:{type: [], get: getTags, set: setTags},
     createdAt: { type : Date, default : Date.now },
     createdBy: {type : Schema.ObjectId, ref : 'User'},
   }],
   Projects: [{
     obj:{type : Schema.ObjectId, ref : 'Project'},
+    body: {type : String, default : '', trim : true},
     tags:{type: [], get: getTags, set: setTags},
     createdAt: { type : Date, default : Date.now },
     createdBy: {type : Schema.ObjectId, ref : 'User'},

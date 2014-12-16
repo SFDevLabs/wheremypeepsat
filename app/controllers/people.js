@@ -36,27 +36,50 @@ exports.load = function (req, res, next, id){
       if (err) return next(err);
       if (!article) return next(new Error('not found'));
       req.article = article;
-      console.log(req.article, 'load')
       next();
     });
   }); //elemMatch id to find connection going other way
 };
 
 exports.loadconnected = function (req, res, next, id){
-  req.connected=req.article.People[0]
+  req.article.People.forEach(function(val, i){
+    if(val.id===id){
+      req.edge=val;
+    }
+  });
   next();
 }
-exports.connected = function (req, res){
-  ///console.log(req.connected)
-    var articles = req.articles;
-    var connected = req.articles;
-    res.render('peoples/editconnection', {
-        title: 'People',
-        articles: articles,
-        connected: connected
-      });
 
-  //.send({1:req.connected,2:req.article})
+
+exports.connectededit = function (req, res){
+    var article = req.article;
+    var edge = req.edge;
+
+    console.log(article)
+    res.render('peoples/editconnection', {
+        title: 'Edit Connection',
+        article: article,
+        edge: edge
+      });
+}
+
+exports.connectedupdate = function (req, res){
+    var article = req.article;
+    var edge = req.edge;
+
+    console.log(req.body)
+    article.People[0] = extend(edge, req.body);
+
+    console.log(article)
+    article.save(function(err){
+      if (err) {
+          req.flash('error', 'An Error Occured, Person not added.');
+        } else{
+          req.flash('success', 'Successfully updated connection!');
+      }
+      res.redirect('/people/'+req.article.id+'/person/'+req.edge.id)
+    });
+
 }
 
 /**
